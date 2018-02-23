@@ -172,6 +172,8 @@ length: 1
 __proto__: Storage
 ```
 
+### Checkout page
+
 To load the items in our checkout page, we need to use the JSON.parse() method to convert them from a string
 to a JavaScript Object. The code responsible for this is contained in `../scripts/checkout.js`. Let's
 look a the code:
