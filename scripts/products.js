@@ -1,7 +1,13 @@
 let productList = document.getElementById("product-list");
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+
+function updateQuantity() {
+    let checkoutQuantity = document.querySelector("span");
+    checkoutQuantity.innerHTML = String(cartItems.length);
+}
 
 function addToCart(product) {
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     cartItems.push(product);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
 }
@@ -22,6 +28,7 @@ function addProductCard(product) {
     button.setAttribute("id", "add-to-cart");
     button.addEventListener('click', () => {
         addToCart(product);
+        updateQuantity();
     });
     productCard.appendChild(heading);
     productCard.appendChild(image);
@@ -35,3 +42,4 @@ for(let product of products) {
     addProductCard(product);
 }
 
+updateQuantity();
