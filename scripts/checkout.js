@@ -4,7 +4,7 @@ let cartItems = JSON.parse(localStorage.getItem("cartItems"));
 function calculateQuantity(product) {
     let quantity = 0;
     for(let item of cartItems) {
-        if(item.id === product.id) {
+        if(item.Id === product.Id) {
             quantity++;
         }
     }
@@ -19,10 +19,10 @@ function displayCart(product) {
     let image = document.createElement("img");
     let quantity = document.createElement("span");
 
-    heading.innerHTML = product.name;
-    image.setAttribute("src", product.image);
-    description.innerHTML = product.description;
-    price.innerHTML = `${product.price} SEK`;
+    heading.innerHTML = product.Name;
+    image.setAttribute("src", product.Image);
+    description.innerHTML = product.Description;
+    price.innerHTML = `${product.Price} SEK`;
     quantity.innerHTML = `${calculateQuantity(product)}`;
 
     productCard.appendChild(heading);
@@ -36,7 +36,7 @@ function displayCart(product) {
 function loadItems() {
     let deDuplicatedArray = cartItems.filter((product, index, cartItems) => {
         return cartItems.map(object => {
-            return object["name"]}).indexOf(product["name"]) === index;
+            return object["Name"]}).indexOf(product["Name"]) === index;
     });
     cartItems === null
         ? cart.innerHTML = `<h2>No items added!</h2>`
