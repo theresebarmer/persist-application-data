@@ -1,10 +1,17 @@
-let productList = document.getElementById("product-list");
+let productList = $("#product-list");
 let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
+function getProducts(url) {
+    $.get(url, (data) => {
+        for(let product of data) {
+            addProductCard(product)
+        }
+    });
+}
 
 function updateQuantity() {
-    let checkoutQuantity = document.querySelector("span");
-    checkoutQuantity.innerHTML = String(cartItems.length);
+    let checkoutQuantity = $("span");
+    checkoutQuantity.text(String(cartItems.length));
 }
 
 function addToCart(product) {
@@ -13,33 +20,38 @@ function addToCart(product) {
 }
 
 function addProductCard(product) {
-    let productCard = document.createElement("article");
-    let heading = document.createElement("h3");
-    let description = document.createElement("p");
-    let price = document.createElement("footer");
-    let image = document.createElement("img");
-    let button = document.createElement("button");
+    let productCard = $("<article></article>");
+    let heading = $("<h3></h3>");
+    let description = $("<p></p>");
+    let price = $("<footer></footer>");
+    let image = $("<img>");
+    let button = $("<button></button>");
 
-    heading.innerHTML = product.name;
-    image.setAttribute("src", product.image);
-    description.innerHTML= product.description;
-    price.innerHTML = `${product.price} SEK`;
-    button.innerHTML = "Add to Cart";
-    button.setAttribute("id", "add-to-cart");
-    button.addEventListener('click', () => {
+    heading.text(product.Name);
+    image.attr("src", product.Image);
+    description.text(product.Description);
+    price.text(`${product.Price} SEK`);
+    button.text("Add to Cart");
+    button.attr("id", "add-to-cart");
+    button.click(() => {
         addToCart(product);
         updateQuantity();
     });
-    productCard.appendChild(heading);
-    productCard.appendChild(image);
-    productCard.appendChild(description);
-    productCard.appendChild(price);
-    productCard.appendChild(button);
-    productList.appendChild(productCard);
+
+    productCard.append(heading);
+    productCard.append(image);
+    productCard.append(description);
+    productCard.append(price);
+    productCard.append(button);
+
+    image.click(() => {
+        sessionStorage.setItem("productId", product.Id);
+        window.location.assign("product.html");
+    });
+
+    productList.append(productCard);
 }
 
-for(let product of products) {
-    addProductCard(product);
-}
+getProducts("http://demo.edument.se/api/products");
 
 updateQuantity();
