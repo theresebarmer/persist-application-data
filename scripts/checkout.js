@@ -36,7 +36,7 @@ function displayCart(product) {
 function loadItems() {
     let deDuplicatedArray = cartItems.filter((product, index, cartItems) => {
         return cartItems.map(object => {
-            return object["name"]}).indexOf(product["name"]) === index;
+            return object["id"]}).indexOf(product["id"]) === index;
     });
     cartItems === null
         ? cart.innerHTML = `<h2>No items added!</h2>`
